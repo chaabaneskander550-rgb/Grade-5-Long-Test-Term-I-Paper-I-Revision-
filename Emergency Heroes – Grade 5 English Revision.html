@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emergency Heroes – Grade 5 English Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f6fc; --card:#ffffff; --ink:#1b2640; --muted:#5b6785; --line:#e0e7f3;
+  --red:#e5384f; --red-soft:#ffe7eb; --red-t:#c01f39;
+  --blue:#1f6feb; --blue-soft:#e2edff; --blue-t:#1456c4;
+  --green:#16a36a; --green-soft:#d9f6e8; --green-t:#0b7a4f;
+  --amber:#f59e0b; --amber-soft:#fff0cf; --amber-t:#9a5a00;
+  --purple:#7a4bd8; --purple-soft:#eee6ff; --purple-t:#5b32b4;
+  --shadow:0 8px 26px rgba(30,45,95,.09);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1324; --card:#161f38; --ink:#eaf0ff; --muted:#a6b3d3; --line:#26325a;
+    --red-soft:#3c1923; --red-t:#ff8da0; --blue-soft:#172b55; --blue-t:#8db8ff;
+    --green-soft:#11382b; --green-t:#5de0aa; --amber-soft:#3d2f10; --amber-t:#ffc65a;
+    --purple-soft:#2b2050; --purple-t:#c4a9ff; --shadow:0 8px 26px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1324; --card:#161f38; --ink:#eaf0ff; --muted:#a6b3d3; --line:#26325a;
+  --red-soft:#3c1923; --red-t:#ff8da0; --blue-soft:#172b55; --blue-t:#8db8ff;
+  --green-soft:#11382b; --green-t:#5de0aa; --amber-soft:#3d2f10; --amber-t:#ffc65a;
+  --purple-soft:#2b2050; --purple-t:#c4a9ff; --shadow:0 8px 26px rgba(0,0,0,.35);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.5}
+h1,h2,h3{font-family:"Baloo 2","Nunito",system-ui,sans-serif;margin:0;line-height:1.15}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:980px;margin:0 auto;padding:0 14px 60px}
+
+/* HERO */
+.hero{background:linear-gradient(120deg,#e5384f 0%,#ff7a45 55%,#ffb347 100%);color:#fff;border-radius:0 0 28px 28px;padding:22px 18px 26px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.08) 0 18px,transparent 18px 36px);pointer-events:none}
+.hero-in{max-width:980px;margin:0 auto;position:relative;z-index:1}
+.siren{display:inline-block;animation:siren 1s ease-in-out infinite alternate}
+@keyframes siren{from{transform:rotate(-14deg) scale(1)}to{transform:rotate(14deg) scale(1.15)}}
+.hero h1{font-size:clamp(28px,6vw,46px);font-weight:800}
+.hero p{margin:6px 0 0;opacity:.95;font-weight:700}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.pill{background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,.45);border-radius:999px;padding:5px 14px;font-weight:800;white-space:nowrap}
+.prog{flex:1;min-width:150px;height:14px;border-radius:99px;background:rgba(255,255,255,.28);overflow:hidden;border:2px solid rgba(255,255,255,.5)}
+.prog i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:width .5s}
+.theme{position:absolute;right:0;top:-6px;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);border-radius:999px;width:42px;height:42px;font-size:20px;color:#fff}
+
+/* TABS */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:8px;padding:10px 14px;background:var(--bg);max-width:980px;margin:0 auto;overflow-x:auto}
+.tab{flex:1;min-width:112px;border:2px solid var(--line);background:var(--card);border-radius:16px;padding:10px 12px;font-weight:800;box-shadow:var(--shadow);transition:.15s}
+.tab.on{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateY(-1px)}
+.tab[data-t="grammar"].on{background:var(--purple);border-color:var(--purple)}
+.tab[data-t="writing"].on{background:var(--red);border-color:var(--red)}
+.panel{display:none;animation:pop .35s}
+.panel.on{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* GENERIC */
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;margin-top:18px;box-shadow:var(--shadow)}
+.sec-title{display:flex;align-items:center;gap:10px;margin:28px 2px 0;font-size:26px}
+.sec-sub{margin:4px 2px 0;color:var(--muted);font-weight:600}
+.badge{display:inline-block;font-size:13px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--blue-soft);color:var(--blue-t);white-space:nowrap}
+.badge.l2{background:var(--green-soft);color:var(--green-t)}
+.badge.l3{background:var(--amber-soft);color:var(--amber-t)}
+.badge.l4{background:var(--red-soft);color:var(--red-t)}
+.badge.l5{background:var(--purple-soft);color:var(--purple-t)}
+
+/* FLASHCARDS */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.fchip{border:2px solid var(--line);background:var(--card);border-radius:99px;padding:6px 14px;font-weight:800}
+.fchip.on{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-t)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
+.fc{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:center}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;border:2px solid var(--line);padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.fc-f{background:var(--card)}
+.fc-f .em{font-size:36px;line-height:1}
+.fc-f .w{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:19px;line-height:1.1}
+.fc-b{transform:rotateY(180deg);background:var(--blue-soft);font-size:13.5px;line-height:1.3;font-weight:700}
+.fc-b em{display:block;color:var(--blue-t);font-weight:600;font-style:italic;margin-top:4px}
+.spk{position:absolute;top:6px;right:6px;border:0;background:var(--amber-soft);border-radius:99px;width:30px;height:30px;font-size:15px;z-index:2}
+.box1 .fc-f{border-bottom:5px solid var(--purple)}
+.fc-f{border-bottom:5px solid var(--purple)}
+
+/* ACTIVITY */
+.act{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;margin-top:20px;box-shadow:var(--shadow)}
+.act-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.act-h h3{font-size:22px;flex:1}
+.cnt{font-weight:800;color:var(--muted)}
+.desc{margin:6px 0 10px;color:var(--muted);font-weight:600}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#6ee7b7);transition:width .4s}
+.q{padding:12px 4px;border-bottom:1px dashed var(--line)}
+.q:last-child{border-bottom:0}
+.qt{margin:0 0 8px;font-weight:700}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:8px 16px;font-weight:800;transition:.12s}
+.opt:hover:not(:disabled){border-color:var(--blue);transform:translateY(-1px)}
+.opt.good,.good{background:var(--green-soft)!important;border-color:var(--green)!important;color:var(--green-t)}
+.opt.bad,.bad{background:var(--red-soft)!important;border-color:var(--red)!important;color:var(--red-t)}
+.opt:disabled{cursor:default}
+.fb{display:inline-block;margin-left:6px;font-weight:800;font-size:15px}
+select,input.fill{font:inherit;font-weight:800;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:4px 10px;margin:0 3px;max-width:100%}
+input.fill{width:170px}
+select:focus,input.fill:focus{outline:3px solid var(--blue-soft);border-color:var(--blue)}
+.ck{border:0;background:var(--blue);color:#fff;border-radius:12px;padding:5px 12px;font-weight:800;margin-left:4px}
+.hint{color:var(--muted);font-size:14px;font-weight:700;margin-left:6px}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* BANK */
+.story{font-size:18px;line-height:2.3;margin:6px 0 10px;font-weight:600}
+.blank{display:inline-flex;align-items:center;gap:6px;min-width:120px;height:34px;padding:0 10px;border:2px dashed var(--blue);border-radius:12px;background:var(--blue-soft);color:var(--blue-t);font-weight:800;vertical-align:middle;margin:0 3px}
+.blank .num{background:var(--blue);color:#fff;border-radius:99px;width:20px;height:20px;font-size:12px;display:inline-flex;align-items:center;justify-content:center}
+.blank.filled{border-style:solid}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:var(--bg);border-radius:16px;border:2px solid var(--line)}
+.chip{border:2px solid var(--amber);background:var(--amber-soft);color:var(--amber-t);border-radius:99px;padding:6px 16px;font-weight:800}
+.chip.sel{background:var(--amber);color:#fff;transform:scale(1.07)}
+.chip.used{opacity:.25}
+.row-btn{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:0;background:var(--blue);color:#fff;border-radius:14px;padding:9px 18px;font-weight:800;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+.btn.sec{background:var(--bg);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn.red{background:var(--red)}
+.btn:active{transform:translateY(2px)}
+
+/* MISTAKE */
+.sent{font-size:19px;font-weight:700;line-height:2.1}
+.w{border:0;background:none;padding:2px 3px;border-radius:8px;font:inherit;font-weight:700}
+.w:hover{background:var(--amber-soft)}
+.w.bad{text-decoration:underline wavy var(--red);text-underline-offset:5px}
+.w.good{text-decoration:underline 3px var(--green);text-underline-offset:5px}
+.fix{margin-top:2px;color:var(--green-t);font-weight:800}
+
+.res{display:none;margin-top:12px;padding:14px;border-radius:16px;background:var(--green-soft);color:var(--green-t);font-weight:800;text-align:center}
+.res.on{display:block;animation:pop .4s}
+
+/* GRAMMAR LAB */
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+.rule{border-radius:18px;padding:14px;border:2px solid var(--line)}
+.rule.pc{background:var(--blue-soft)} .rule.ps{background:var(--amber-soft)}
+.rule h4{margin:0 0 4px;font-family:"Baloo 2",sans-serif;font-size:19px}
+.rule.pc h4{color:var(--blue-t)} .rule.ps h4{color:var(--amber-t)}
+.rule p{margin:2px 0;font-weight:700;font-size:16px}
+.look{border:3px solid var(--purple);border-radius:16px;padding:10px 16px;display:flex;gap:14px;align-items:center;margin-top:14px;background:var(--purple-soft)}
+.look b.l{color:var(--purple-t);font-family:"Baloo 2",sans-serif;font-size:20px}
+.look div{font-weight:800}
+.look em{font-style:italic;color:var(--red-t)}
+.lab-btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.blocks{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;align-items:flex-end}
+.blk{padding:8px 12px;border-radius:10px;background:var(--bg);border:2px solid var(--line);font-weight:800;position:relative;animation:drop .5s backwards}
+@keyframes drop{from{opacity:0;transform:translateY(-14px)}}
+.blk.pc{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-t)}
+.blk.ps{background:var(--amber-soft);border-color:var(--amber);color:var(--amber-t)}
+.blk.cj{background:var(--purple-soft);border-color:var(--purple);color:var(--purple-t)}
+.blk small{position:absolute;top:-9px;left:6px;font-size:10px;background:var(--card);padding:0 4px;border-radius:6px;color:var(--muted)}
+.tl{position:relative;height:96px;margin-top:6px;border-radius:16px;background:var(--bg);border:2px solid var(--line);overflow:hidden}
+.tl-bar{position:absolute;left:3%;right:3%;top:16px;height:32px;border-radius:99px;background:repeating-linear-gradient(135deg,var(--blue) 0 14px,#4f93ff 14px 28px);background-size:56px 100%;animation:slide 1.4s linear infinite;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;padding:0 10px}
+@keyframes slide{to{background-position:56px 0}}
+.tl-burst{position:absolute;top:2px;transform:translateX(-50%);text-align:center;font-weight:800;font-size:13px;color:var(--amber-t);transition:left .5s}
+.tl-burst span{display:block;font-size:34px;line-height:1;animation:zap .8s infinite alternate;filter:drop-shadow(0 0 6px var(--amber))}
+@keyframes zap{from{transform:scale(.9) rotate(-8deg)}to{transform:scale(1.15) rotate(8deg)}}
+.tl-lab{position:absolute;bottom:4px;font-size:12px;font-weight:800;color:var(--muted)}
+.cap{font-weight:700;color:var(--muted);margin:4px 0 0}
+
+/* WRITING */
+.task{background:linear-gradient(120deg,var(--red-soft),var(--amber-soft));border:2px solid var(--red);border-radius:20px;padding:16px 18px}
+.task h3{color:var(--red-t)}
+.task p{margin:6px 0;font-weight:800}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
+.pcard{border-radius:18px;padding:14px;border:2px solid}
+.pcard.p1{background:var(--blue-soft);border-color:var(--blue)} .pcard.p2{background:var(--amber-soft);border-color:var(--amber)} .pcard.p3{background:var(--green-soft);border-color:var(--green)}
+.pcard h4{margin:0;font-family:"Baloo 2",sans-serif;font-size:19px}
+.pcard.p1 h4{color:var(--blue-t)} .pcard.p2 h4{color:var(--amber-t)} .pcard.p3 h4{color:var(--green-t)}
+.pcard ul{margin:6px 0 8px;padding-left:20px;font-weight:700}
+.starters{display:flex;flex-wrap:wrap;gap:6px}
+.st{border:2px dashed currentColor;background:var(--card);border-radius:99px;padding:3px 11px;font-weight:800;font-size:14.5px}
+.p1 .st{color:var(--blue-t)} .p2 .st{color:var(--amber-t)} .p3 .st{color:var(--green-t)}
+.mtabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.news{border:2px solid var(--line);border-radius:18px;padding:16px;background:var(--bg)}
+.news h3{font-size:26px;border-bottom:3px double var(--ink);padding-bottom:6px}
+.by{color:var(--muted);font-weight:700;font-size:14px;margin:6px 0 10px}
+.para{position:relative;margin:10px 0;padding:10px 12px 10px 14px;border-left:6px solid;border-radius:0 14px 14px 0;background:var(--card);font-size:17.5px}
+.para .lab{display:block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.para.p1{border-color:var(--blue)} .para.p1 .lab{color:var(--blue-t)}
+.para.p2{border-color:var(--amber)} .para.p2 .lab{color:var(--amber-t)}
+.para.p3{border-color:var(--green)} .para.p3 .lab{color:var(--green-t)}
+.news i{font-style:normal}
+.hl i.pc{background:var(--blue-soft);color:var(--blue-t);border-radius:6px;padding:0 4px;font-weight:800}
+.hl i.ps{background:var(--amber-soft);color:var(--amber-t);border-radius:6px;padding:0 4px;font-weight:800}
+.hl i.cj{background:var(--purple-soft);color:var(--purple-t);border-radius:6px;padding:0 4px;font-weight:800}
+.hl i.vc{color:var(--green-t);text-decoration:underline 3px var(--green);text-underline-offset:4px;font-weight:800}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:800;margin:8px 0}
+.legend span{padding:2px 10px;border-radius:99px}
+.wc{display:inline-block;font-weight:800;padding:4px 14px;border-radius:99px;background:var(--green-soft);color:var(--green-t)}
+.wc.no{background:var(--red-soft);color:var(--red-t)}
+textarea{width:100%;min-height:210px;border:2px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink);font:inherit;font-size:18px;padding:12px;resize:vertical;line-height:1.6}
+textarea:focus{outline:3px solid var(--blue-soft);border-color:var(--blue)}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-top:10px}
+.chk{display:flex;gap:8px;align-items:center;padding:8px 12px;border-radius:12px;background:var(--bg);border:2px solid var(--line);font-weight:800;font-size:15px}
+.chk.on{background:var(--green-soft);border-color:var(--green);color:var(--green-t)}
+.chk .ic{width:22px;height:22px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;background:var(--line);font-size:13px}
+.chk.on .ic{background:var(--green);color:#fff}
+
+/* CONFETTI */
+.cf{position:fixed;top:-12px;width:10px;height:14px;z-index:99;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+footer{text-align:center;color:var(--muted);font-weight:700;margin-top:30px}
+@media (max-width:520px){ body{font-size:16px} .sec-title{font-size:22px} input.fill{width:140px} }
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-in">
+    <button class="theme" id="themeBtn" aria-label="Toggle dark mode">🌓</button>
+    <h1><span class="siren">🚨</span> Emergency Heroes</h1>
+    <p>Grade 5 English Revision · Vocabulary · Grammar · Writing</p>
+    <div class="stats">
+      <span class="pill">⚡ <span id="xp">0</span> XP</span>
+      <span class="pill">⭐ <span id="stars">0</span> stars</span>
+      <span class="pill">✅ <span id="done">0</span>/<span id="total">0</span></span>
+      <div class="prog" aria-label="progress"><i id="pbar"></i></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab on" data-t="vocab">🧠 Vocabulary</button>
+  <button class="tab" data-t="grammar">✏️ Grammar</button>
+  <button class="tab" data-t="writing">📰 Writing</button>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= VOCAB ================= -->
+<section class="panel on" id="vocab">
+  <h2 class="sec-title">🃏 Step 1 · Flip &amp; learn</h2>
+  <p class="sec-sub">Tap a card to see the meaning. Tap 🔊 to hear the word.</p>
+  <div class="filters" id="vfilters"></div>
+  <div class="grid" id="vgrid"></div>
+
+  <h2 class="sec-title">🎮 Step 2 · Vocabulary missions</h2>
+  <p class="sec-sub">Four levels – from easier to harder. Earn ⚡ XP for every first-try answer!</p>
+  <div id="vacts"></div>
+</section>
+
+<!-- ================= GRAMMAR ================= -->
+<section class="panel" id="grammar">
+  <h2 class="sec-title">🔬 Grammar lab · Past continuous with past simple</h2>
+  <div class="card">
+    <div class="rule-grid">
+      <div class="rule pc">
+        <h4>Past continuous (a longer action)</h4>
+        <p>I / he / she / it → <b>was</b> + verb-ing</p>
+        <p>you / we / they → <b>were</b> + verb-ing</p>
+        <p>Negative: <b>wasn't / weren't</b> + verb-ing</p>
+      </div>
+      <div class="rule ps">
+        <h4>Past simple (a short action)</h4>
+        <p>cook → <b>cooked</b> · ring → <b>rang</b></p>
+        <p>see → <b>saw</b> · catch → <b>caught</b></p>
+        <p>It <b>interrupts</b> the longer action!</p>
+      </div>
+    </div>
+    <div class="look"><b class="l">Look!</b>
+      <div>past continuous + <em>when</em> + past simple<br>past simple + <em>while</em> + past continuous</div>
+    </div>
+
+    <h3 style="margin-top:20px">⚡ Sentence builder – tap a sentence</h3>
+    <div class="lab-btns" id="labBtns"></div>
+    <div class="blocks" id="blocks"></div>
+    <div class="tl" id="tl">
+      <div class="tl-bar" id="tlBar"></div>
+      <div class="tl-burst" id="tlBurst"><span>⚡</span><div id="tlBurstT"></div></div>
+      <div class="tl-lab" style="left:4%">▬ past continuous = longer action</div>
+      <div class="tl-lab" style="right:4%">⚡ past simple = short action</div>
+    </div>
+    <p class="cap" id="labCap"></p>
+  </div>
+
+  <h2 class="sec-title">🎮 Grammar missions</h2>
+  <p class="sec-sub">Same four levels – plus a bonus mistake hunt!</p>
+  <div id="gacts"></div>
+</section>
+
+<!-- ================= WRITING ================= -->
+<section class="panel" id="writing">
+  <h2 class="sec-title">📰 Writing · 10 marks</h2>
+  <div class="task" style="margin-top:14px">
+    <h3>Your task</h3>
+    <p>Write a <u>50–90 words</u> news report about an emergency you witnessed.</p>
+    <p>Your article must include <u>three paragraphs</u>.</p>
+  </div>
+
+  <h2 class="sec-title">🗺️ Plan it</h2>
+  <p class="sec-sub">Tap a sentence starter to add it to your draft (at the bottom of the page).</p>
+  <div class="plan">
+    <div class="pcard p1"><h4>1 · Introduction</h4>
+      <ul><li>Who was there?</li><li>Where were you?</li><li>What were you doing?</li></ul>
+      <div class="starters" data-ins="1"><button class="st">Last Friday, I was </button><button class="st">My family and I were </button><button class="st">We were … when </button></div></div>
+    <div class="pcard p2"><h4>2 · Body of the article</h4>
+      <ul><li>What happened?</li></ul>
+      <div class="starters"><button class="st">Suddenly, the </button><button class="st">While we were …, </button><button class="st">The fire engine arrived </button></div></div>
+    <div class="pcard p3"><h4>3 · Conclusion</h4>
+      <ul><li>How did it end?</li><li>What did people say?</li><li>How did you feel?</li></ul>
+      <div class="starters"><button class="st">Luckily, nobody was hurt. </button><button class="st">The firefighters said </button><button class="st">I felt … because </button></div></div>
+  </div>
+
+  <h2 class="sec-title">⭐ Model news reports</h2>
+  <p class="sec-sub">Three A2 models to follow. Switch on the highlights to spot the grammar and the vocabulary.</p>
+  <div class="card">
+    <div class="mtabs" id="mtabs"></div>
+    <div class="legend hl">
+      <button class="btn sec" id="hlBtn" style="padding:4px 14px">🖍️ Highlights: ON</button>
+      <button class="btn sec" id="readBtn" style="padding:4px 14px">🔊 Read aloud</button>
+      <span style="background:var(--blue-soft);color:var(--blue-t)">was / were + -ing</span>
+      <span style="background:var(--amber-soft);color:var(--amber-t)">past simple</span>
+      <span style="background:var(--purple-soft);color:var(--purple-t)">when / while</span>
+      <span style="background:var(--green-soft);color:var(--green-t)">unit vocabulary</span>
+    </div>
+    <article class="news hl" id="news"></article>
+    <p style="margin:10px 0 0"><span class="wc" id="mwc"></span></p>
+  </div>
+
+  <h2 class="sec-title">✍️ Your turn</h2>
+  <p class="sec-sub">Write your own report. Leave a blank line between paragraphs.</p>
+  <div class="card">
+    <textarea id="draft" placeholder="Headline (optional)&#10;&#10;Paragraph 1: Last Friday, I was …&#10;&#10;Paragraph 2: Suddenly, …&#10;&#10;Paragraph 3: Luckily, …"></textarea>
+    <p style="margin:10px 0 0"><span class="wc no" id="dwc">0 words</span></p>
+    <div class="checks" id="checks"></div>
+  </div>
+</section>
+
+<footer>Good luck, little heroes! 🦸‍♀️🦸‍♂️</footer>
+</main>
+
+<script>
+/* ---------- helpers ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>s.toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").trim();
+const speak=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.9;speechSynthesis.speak(u)}catch(e){}};
+
+/* ---------- global stats ---------- */
+const S={xp:0,stars:0,correct:0,total:0,celebrated:false};
+function stats(){
+  $("#xp").textContent=S.xp;$("#stars").textContent=S.stars;
+  $("#done").textContent=S.correct;$("#total").textContent=S.total;
+  $("#pbar").style.width=(S.total?S.correct/S.total*100:0)+"%";
+  if(S.total&&S.correct===S.total&&!S.celebrated){S.celebrated=true;confetti(120)}
+}
+function confetti(n=50){
+  const cols=["#e5384f","#ff9f1c","#16a36a","#1f6feb","#7a4bd8","#ffd166"];
+  for(let i=0;i<n;i++){
+    const c=el("div","cf");c.style.left=Math.random()*100+"vw";
+    c.style.background=cols[i%cols.length];c.style.borderRadius=Math.random()>.5?"50%":"2px";
+    c.style.animationDuration=(1.8+Math.random()*2)+"s";c.style.animationDelay=(Math.random()*.6)+"s";
+    document.body.appendChild(c);setTimeout(()=>c.remove(),4500);
+  }
+}
+
+/* ---------- activity shell ---------- */
+function Act(host,{badge,lv="",title,desc,n,build}){
+  const box=el("section","act");
+  box.innerHTML=`<div class="act-h"><span class="badge ${lv}">${badge}</span><h3>${title}</h3><span class="cnt">0/${n}</span></div>
+  <p class="desc">${desc}</p><div class="bar"><i></i></div><div class="body"></div><div class="res"></div>
+  <div class="row-btn"><button class="btn sec rst">🔄 Try again</button></div>`;
+  host.appendChild(box);
+  S.total+=n;
+  const a={n,done:0,ok:0,stars:0,body:$(".body",box)};
+  a.solve=first=>{
+    a.done++;S.correct++;if(first){a.ok++;S.xp+=10}
+    $(".cnt",box).textContent=a.done+"/"+n;$(".bar i",box).style.width=a.done/n*100+"%";
+    if(a.done===n){
+      a.stars=a.ok===n?3:a.ok>=n*.7?2:1;S.stars+=a.stars;
+      const r=$(".res",box);r.classList.add("on");
+      r.innerHTML=`${"⭐".repeat(a.stars)}${"☆".repeat(3-a.stars)}<br>${a.ok}/${n} correct on the first try!`+(a.stars===3?" 🏆 Perfect!":a.stars===2?" Great job!":" Keep practising – tap Try again!");
+      if(a.stars>=2)confetti(60);
+    }
+    stats();
+  };
+  const reset=()=>{
+    S.xp-=a.ok*10;S.correct-=a.done;S.stars-=a.stars;S.celebrated=false;
+    a.done=0;a.ok=0;a.stars=0;a.body.innerHTML="";
+    $(".cnt",box).textContent="0/"+n;$(".bar i",box).style.width="0";$(".res",box).classList.remove("on");
+    build(a);stats();
+  };
+  $(".rst",box).onclick=reset;
+  build(a);stats();
+}
+
+/* ---------- question builders ---------- */
+function mcq(items){return a=>items.forEach((it,i)=>{
+  const q=el("div","q");q.tries=0;
+  q.innerHTML=`<p class="qt"><b>${i+1}.</b> ${it.q}</p>`;
+  const opts=el("div","opts"),fb=el("span","fb");
+  shuffle(it.o).forEach(o=>{
+    const b=el("button","opt",o);
+    b.onclick=()=>{
+      if(q.solved)return;
+      if(o===it.a){b.classList.add("good");q.solved=true;$$(".opt",opts).forEach(x=>x.disabled=true);fb.textContent="✅ Great!";a.solve(q.tries===0)}
+      else{q.tries++;b.classList.add("bad");b.disabled=true;fb.textContent="❌ Try again"}
+    };opts.append(b);
+  });
+  opts.append(fb);q.append(opts);a.body.append(q);
+})}
+
+function choose(items,ph="choose…"){return a=>items.forEach((it,i)=>{
+  const q=el("div","q");q.tries=0;
+  const opts=shuffle(it.o).map(o=>`<option>${o}</option>`).join("");
+  q.innerHTML=`<p class="qt"><b>${i+1}.</b> ${it.q.replace("___",`<select><option value="">${ph}</option>${opts}</select>`)} <span class="fb"></span></p>`;
+  const s=$("select",q),fb=$(".fb",q);
+  s.onchange=()=>{
+    if(!s.value||q.solved)return;
+    s.classList.remove("bad","good");
+    if(s.value===it.a){s.classList.add("good");s.disabled=true;q.solved=true;fb.textContent="✅";a.solve(q.tries===0)}
+    else{q.tries++;s.classList.add("bad","shake");setTimeout(()=>s.classList.remove("shake"),400);fb.textContent="❌ Try again"}
+  };
+  a.body.append(q);
+})}
+
+function typed(items){return a=>items.forEach((it,i)=>{
+  const q=el("div","q");q.tries=0;
+  q.innerHTML=`<p class="qt"><b>${i+1}.</b> ${it.q.replace("___",`<input class="fill" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${it.h||"type here"}"><button class="ck">Check</button>`)} <span class="fb"></span></p>`;
+  const inp=$("input",q),fb=$(".fb",q),ck=$(".ck",q);
+  const go=()=>{
+    if(q.solved||!inp.value.trim())return;
+    const ok=it.a.map(norm).includes(norm(inp.value));
+    if(ok){inp.classList.remove("bad");inp.classList.add("good");inp.disabled=true;ck.remove();q.solved=true;fb.textContent="✅ "+it.a[0];a.solve(q.tries===0)}
+    else{q.tries++;inp.classList.add("bad","shake");setTimeout(()=>inp.classList.remove("shake"),400);fb.textContent=q.tries>1&&it.hint?"💡 "+it.hint:"❌ Try again"}
+  };
+  ck.onclick=go;inp.onkeydown=e=>{if(e.key==="Enter")go()};
+  a.body.append(q);
+})}
+
+function bank(d){return a=>{
+  const para=el("p","story");
+  para.innerHTML=d.text.replace(/\{(\d+)\}/g,(m,n)=>`<button class="blank"><span class="num">${n}</span><span class="val"></span></button>`);
+  const chipsBox=el("div","chips");let sel=null;
+  const blanks=$$(".blank",para).map((b,i)=>({el:b,ans:d.answers[i],chip:null,solved:false,tries:0}));
+  const release=bl=>{bl.chip.classList.remove("used");bl.chip=null;$(".val",bl.el).textContent="";bl.el.classList.remove("filled","bad")};
+  shuffle(d.bank).forEach(t=>{
+    const c=el("button","chip",t);
+    c.onclick=()=>{if(c.classList.contains("used"))return;if(sel)sel.classList.remove("sel");sel=sel===c?null:c;if(sel)c.classList.add("sel")};
+    chipsBox.append(c);
+  });
+  blanks.forEach(bl=>bl.el.onclick=()=>{
+    if(bl.solved)return;
+    if(!sel){if(bl.chip)release(bl);return}
+    if(bl.chip)release(bl);
+    bl.chip=sel;sel.classList.remove("sel");sel.classList.add("used");
+    $(".val",bl.el).textContent=sel.textContent;bl.el.classList.add("filled");bl.el.classList.remove("bad");sel=null;
+  });
+  const btn=el("button","btn","✔ Check my answers");
+  btn.onclick=()=>blanks.forEach(bl=>{
+    if(bl.solved||!bl.chip)return;
+    if(bl.chip.textContent===bl.ans){bl.solved=true;bl.el.classList.remove("bad");bl.el.classList.add("good");a.solve(bl.tries===0)}
+    else{bl.tries++;bl.el.classList.add("bad","shake");setTimeout(()=>{bl.el.classList.remove("shake");if(!bl.solved)release(bl);bl.el.classList.remove("bad")},900)}
+  });
+  a.body.append(para,el("p","hint","👇 Tap a word, then tap a numbered gap. Tap a filled gap to take the word back."),chipsBox);
+  const rb=el("div","row-btn");rb.append(btn);a.body.append(rb);
+}}
+
+function mistake(items){return a=>items.forEach((it,i)=>{
+  const q=el("div","q");q.tries=0;
+  q.innerHTML=`<p class="qt"><b>${i+1}.</b> Tap the wrong word to underline it.</p><div class="sent"></div><div class="fix"></div>`;
+  const box=$(".sent",q);
+  it.s.split(" ").forEach((w,k)=>{
+    const b=el("button","w",w);
+    b.onclick=()=>{
+      if(q.solved)return;
+      if(k===it.i){b.classList.remove("bad");b.classList.add("good");q.solved=true;$(".fix",q).textContent="✅ "+it.fix;a.solve(q.tries===0)}
+      else{q.tries++;b.classList.add("bad");setTimeout(()=>{if(!q.solved)b.classList.remove("bad")},900)}
+    };
+    box.append(b," ");
+  });
+  a.body.append(q);
+})}
+
+/* ================= VOCAB DATA ================= */
+const V=[
+ // box, word, emoji, meaning, example
+ [1,"explain","💬","to make something clear so people understand","Please explain the rule again."],
+ [1,"whisper","🤫","to speak very quietly","Whisper in the library."],
+ [2,"lifeboat","🆘","a small boat used to save people from a ship","They jumped into the lifeboat."],
+ [2,"life jacket","🦺","you wear it in the water so you can float","Always wear a life jacket."],
+ [2,"rescue boat","🚤","a boat that goes to save people in the sea","The rescue boat arrived fast."],
+ [3,"alarm","🚨","a loud sound that warns you of danger","The alarm rang loudly."],
+ [3,"emergency","⚠️","a sudden dangerous situation that needs quick action","Call 999 in an emergency."],
+ [3,"experiment","🧪","a science test to find out something","We did an experiment today."],
+ [3,"fire drill","🏫","practice of leaving a building when there is a fire","We have a fire drill each month."],
+ [3,"fire engine","🚒","a big red truck that carries firefighters","The fire engine came quickly."],
+ [3,"smoke","💨","grey gas that comes from a fire","I could smell smoke."],
+ [4,"accident","💥","something bad that happens by chance","The car accident was sad."],
+ [4,"ambulance","🚑","a vehicle that takes hurt people to hospital","The ambulance took him to hospital."],
+ [4,"cause (caused)","🧨","to make something happen","A cooker caused the fire."],
+ [4,"cooker","🍳","a machine in the kitchen used to cook food","Mum turned off the cooker."],
+ [4,"electricity","⚡","power that makes lights and machines work","There was no electricity."],
+ [4,"heating","♨️","a system that keeps a room warm","Turn on the heating."],
+ [4,"million","🔢","1,000,000","A million people live there."],
+ [4,"power","🔌","energy that makes machines work","The power went off."],
+ [4,"rehearse (rehearsing)","🎭","to practise something before the real time","We are rehearsing the play."],
+ [4,"weird","🤪","strange or unusual","I heard a weird noise."]
+];
+const boxNames={0:"All words",1:"📘 Box 1",2:"🛟 Box 2",3:"🚒 Box 3",4:"💥 Box 4"};
+let vf=0;
+function drawCards(){
+  const g=$("#vgrid");g.innerHTML="";
+  V.filter(v=>!vf||v[0]===vf).forEach(v=>{
+    const c=el("div","fc");c.setAttribute("role","button");c.tabIndex=0;
+    c.innerHTML=`<div class="fc-in"><div class="fc-f"><button class="spk" aria-label="listen">🔊</button><span class="em">${v[2]}</span><span class="w">${v[1]}</span></div><div class="fc-b"><div>${v[3]}<em>“${v[4]}”</em></div></div></div>`;
+    c.onclick=()=>c.classList.toggle("flip");
+    c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();c.classList.toggle("flip")}};
+    $(".spk",c).onclick=e=>{e.stopPropagation();speak(v[1].replace(/\(.*\)/,""))};
+    g.append(c);
+  });
+}
+const vfBox=$("#vfilters");
+Object.entries(boxNames).forEach(([k,t])=>{
+  const b=el("button","fchip"+(k==0?" on":""),t);
+  b.onclick=()=>{vf=+k;$$(".fchip",vfBox).forEach(x=>x.classList.remove("on"));b.classList.add("on");drawCards()};
+  vfBox.append(b);
+});
+drawCards();
+
+const va=$("#vacts");
+Act(va,{badge:"⭐ Level 1",lv:"",title:"Multiple choice – What does it mean?",desc:"Read the meaning and tap the correct word.",n:8,build:mcq([
+ {q:"A loud sound that warns you about danger.",o:["alarm","whisper","smoke"],a:"alarm"},
+ {q:"A vehicle that takes hurt people to hospital.",o:["ambulance","cooker","lifeboat"],a:"ambulance"},
+ {q:"You wear it in the water to stay safe.",o:["life jacket","fire engine","heating"],a:"life jacket"},
+ {q:"Grey gas that comes from a fire.",o:["smoke","power","experiment"],a:"smoke"},
+ {q:"A sudden dangerous situation that needs quick action.",o:["emergency","million","weird"],a:"emergency"},
+ {q:"To speak very quietly.",o:["explain","whisper","rehearse"],a:"whisper"},
+ {q:"A big red truck with firefighters inside.",o:["fire engine","ambulance","rescue boat"],a:"fire engine"},
+ {q:"Practice of leaving the school when there is a fire.",o:["fire drill","experiment","accident"],a:"fire drill"}
+])});
+Act(va,{badge:"⭐⭐ Level 2",lv:"l2",title:"Choose – Pick the right word",desc:"Use the drop-down list to choose the best word for each sentence.",n:8,build:choose([
+ {q:"In the science lab, we did an ___ with water.",o:["experiment","alarm","cooker"],a:"experiment"},
+ {q:"The teacher will ___ the new rule to us.",o:["explain","whisper","cause"],a:"explain"},
+ {q:"There was a power cut, so we had no ___.",o:["electricity","smoke","lifeboat"],a:"electricity"},
+ {q:"The ship was sinking, so people got into the ___.",o:["lifeboat","cooker","heating"],a:"lifeboat"},
+ {q:"It is cold today. Please turn on the ___.",o:["heating","million","accident"],a:"heating"},
+ {q:"My mum cooks rice on the ___.",o:["cooker","ambulance","alarm"],a:"cooker"},
+ {q:"That is a ___ story. I don't understand it!",o:["weird","lifeboat","experiment"],a:"weird"},
+ {q:"The broken cooker ___ the fire.",o:["caused","explained","whispered"],a:"caused"}
+])});
+Act(va,{badge:"⭐⭐⭐ Level 3",lv:"l3",title:"Complete – Fix the story",desc:"Use the word bank to complete the story. Careful: two words are extra!",n:7,build:bank({
+ text:"Yesterday, we had an {1} at school. The {2} rang loudly and everyone left the building. We saw grey {3} in the kitchen. The firefighters came in a {4} and put out the fire. They said a broken {5} was the cause. Luckily, nobody needed an {6}. Now we are {7} the fire drill every month.",
+ answers:["emergency","alarm","smoke","fire engine","cooker","ambulance","rehearsing"],
+ bank:["emergency","alarm","smoke","fire engine","cooker","ambulance","rehearsing","whisper","million"]
+})});
+Act(va,{badge:"⭐⭐⭐⭐ Level 4",lv:"l4",title:"Fill in the blanks – Hero challenge",desc:"Type the missing word. The first letters will help you.",n:8,build:typed([
+ {q:"Please don't shout. You must ___ in the library.",a:["whisper"],h:"w______"},
+ {q:"Wear a ___ when you go out on a boat.",a:["life jacket"],h:"l___ j_____"},
+ {q:"About one ___ people live in this big city.",a:["million"],h:"m______"},
+ {q:"We are ___ for the school show on Monday.",a:["rehearsing"],h:"r_________",hint:"It means practising before the real show."},
+ {q:"The ___ cut stopped all the machines.",a:["power"],h:"p____"},
+ {q:"A car ___ closed the road this morning.",a:["accident"],h:"a_______"},
+ {q:"The firefighters came in a ___.",a:["fire engine"],h:"f___ e_____"},
+ {q:"The lights and the TV work because of ___.",a:["electricity"],h:"e__________"}
+])});
+
+/* ================= GRAMMAR LAB ================= */
+const LAB=[
+ {b:"I was cooking when the alarm rang.",p:[["I",""],["was cooking","pc"],["when","cj"],["the alarm",""],["rang","ps"]],bar:"was cooking",burst:"rang",pos:62,cap:"Past continuous + when + past simple: the alarm interrupted my cooking."},
+ {b:"We saw smoke while we were walking.",p:[["We",""],["saw","ps"],["smoke",""],["while","cj"],["we",""],["were walking","pc"]],bar:"were walking",burst:"saw",pos:48,cap:"Past simple + while + past continuous: we saw smoke during our walk."},
+ {b:"She wasn't listening when the teacher explained.",p:[["She",""],["wasn't listening","pc"],["when","cj"],["the teacher",""],["explained","ps"]],bar:"wasn't listening",burst:"explained",pos:66,cap:"Negative past continuous: she wasn't listening at that moment."},
+ {b:"The ambulance arrived while the doctor was waiting.",p:[["The ambulance",""],["arrived","ps"],["while","cj"],["the doctor",""],["was waiting","pc"]],bar:"was waiting",burst:"arrived",pos:55,cap:"The short action (arrived) happened in the middle of the long action (was waiting)."}
+];
+const lb=$("#labBtns");
+const tag={pc:"past continuous",ps:"past simple",cj:"link"};
+function showLab(i){
+  const L=LAB[i];$$(".btn",lb).forEach((b,k)=>b.classList.toggle("sec",k!==i));
+  const bl=$("#blocks");bl.innerHTML="";
+  L.p.forEach(([t,c],k)=>{const b=el("span","blk "+c,(c?`<small>${tag[c]}</small>`:"")+t);b.style.animationDelay=k*.12+"s";bl.append(b)});
+  bl.append(el("span","blk","."));
+  $("#tlBar").textContent=L.bar;$("#tlBurst").style.left=L.pos+"%";$("#tlBurstT").textContent=L.burst;$("#labCap").textContent=L.cap;
+}
+LAB.forEach((L,i)=>{const b=el("button","btn sec",L.b);b.style.fontSize="14px";b.onclick=()=>showLab(i);lb.append(b)});
+showLab(0);
+
+const ga=$("#gacts");
+Act(ga,{badge:"⭐ Level 1",lv:"",title:"Multiple choice – Pick the correct verb",desc:"Tap the correct form of the verb.",n:8,build:mcq([
+ {q:"I ___ TV when the alarm rang.",o:["was watching","watched","were watching"],a:"was watching"},
+ {q:"They were playing football ___ it started to rain.",o:["when","while","because"],a:"when"},
+ {q:"While we ___ lunch, the fire alarm rang.",o:["were eating","ate","was eating"],a:"were eating"},
+ {q:"She ___ the smoke when she was cooking.",o:["smelled","was smelling","were smell"],a:"smelled"},
+ {q:"The firefighters ___ when we called them.",o:["arrived","were arriving","was arrived"],a:"arrived"},
+ {q:"He ___ his bike when he fell.",o:["was riding","were riding","rides"],a:"was riding"},
+ {q:"We ___ in the playground when the fire drill began.",o:["were standing","was standing","stood"],a:"were standing"},
+ {q:"Mum ___ in the kitchen while I was doing my homework.",o:["was cooking","cooked","cook"],a:"was cooking"}
+])});
+Act(ga,{badge:"⭐⭐ Level 2",lv:"l2",title:"Choose – when or while?",desc:"Remember: past continuous + WHEN + past simple · past simple + WHILE + past continuous.",n:8,build:choose([
+ {q:"I was sleeping ___ the alarm rang.",o:["when","while"],a:"when"},
+ {q:"The alarm rang ___ we were having a lesson.",o:["when","while"],a:"while"},
+ {q:"We were walking to the exit ___ we saw smoke.",o:["when","while"],a:"when"},
+ {q:"He fell ___ he was running down the stairs.",o:["when","while"],a:"while"},
+ {q:"She was cooking ___ the power went off.",o:["when","while"],a:"when"},
+ {q:"The lights went out ___ I was doing my homework.",o:["when","while"],a:"while"},
+ {q:"They were rehearsing the fire drill ___ the teacher blew the whistle.",o:["when","while"],a:"when"},
+ {q:"My brother broke the cup ___ he was washing it.",o:["when","while"],a:"while"}
+],"when / while")});
+Act(ga,{badge:"⭐⭐⭐ Level 3",lv:"l3",title:"Complete – Build the story",desc:"Use the word bank. Two verbs are extra!",n:5,build:bank({
+ text:"Last night, I {1} my homework when the lights {2} out. My sister {3} a book in her room at that time. We {4} a strange noise. While we {5} for Dad, the power came back.",
+ answers:["was doing","went","was reading","heard","were calling"],
+ bank:["was doing","went","was reading","heard","were calling","did","called"]
+})});
+Act(ga,{badge:"⭐⭐⭐⭐ Level 4",lv:"l4",title:"Fill in the blanks – Verb power",desc:"Write the verb in brackets in the past simple or past continuous.",n:8,build:typed([
+ {q:"I ___ (cook) dinner when the smoke alarm rang.",a:["was cooking"]},
+ {q:"While we ___ (rehearse), the teacher came in.",a:["were rehearsing"]},
+ {q:"The firefighters ___ (arrive) at nine o'clock.",a:["arrived"]},
+ {q:"She ___ (talk) on the phone when she heard a weird noise.",a:["was talking"]},
+ {q:"While Dad ___ (drive), he saw an accident.",a:["was driving"]},
+ {q:"We ___ (not / watch) TV when the power went off.",a:["weren't watching","were not watching"],hint:"Use the negative: weren't + verb-ing."},
+ {q:"The boys ___ (swim) when the lifeguard shouted.",a:["were swimming"]},
+ {q:"The car ___ (hit) the wall while the driver was looking at his phone.",a:["hit"]}
+])});
+Act(ga,{badge:"🔎 Bonus",lv:"l5",title:"Underline the mistake",desc:"Each sentence has ONE wrong word. Tap it to underline it!",n:7,build:mistake([
+ {s:"I was watch TV when the alarm rang.",i:2,fix:"I was watching TV when the alarm rang."},
+ {s:"They was playing when the fire started.",i:1,fix:"They were playing when the fire started."},
+ {s:"While she was cooking, the cooker catch fire.",i:6,fix:"While she was cooking, the cooker caught fire."},
+ {s:"We were walk to school when we heard a weird noise.",i:2,fix:"We were walking to school when we heard a weird noise."},
+ {s:"He were sleeping when the phone rang.",i:1,fix:"He was sleeping when the phone rang."},
+ {s:"While we was waiting outside, the fire engine came.",i:2,fix:"While we were waiting outside, the fire engine came."},
+ {s:"She weren't listening when the alarm rang.",i:1,fix:"She wasn't listening when the alarm rang."}
+])});
+
+/* ================= WRITING ================= */
+const M=[
+ {tab:"🔥 Fire at school",h:"Fire Drama at School!",by:"By a Grade 5 reporter",p:[
+  `Last Tuesday, I <i class="pc">was sitting</i> in my classroom with my friends in Bahrain. We <i class="pc">were reading</i> a story <i class="cj">when</i> something strange <i class="ps">happened</i>.`,
+  `Suddenly, the <i class="vc">alarm</i> <i class="ps">rang</i> loudly. Our teacher <i class="ps">told</i> us to leave the room quickly. <i class="cj">While</i> we <i class="pc">were walking</i> to the playground, we <i class="ps">saw</i> <i class="vc">smoke</i> near the canteen. A <i class="vc">fire engine</i> <i class="ps">arrived</i> in five minutes.`,
+  `Luckily, nobody was hurt. The firefighters <i class="ps">said</i> the <i class="vc">cooker</i> <i class="vc">caused</i> the fire. I <i class="ps">felt</i> scared, but I was proud of my class because we <i class="ps">stayed</i> calm.`]},
+ {tab:"🍳 Kitchen fire",h:"Kitchen Fire! Family Safe",by:"By a Grade 5 reporter",p:[
+  `Yesterday evening, my family and I <i class="pc">were having</i> dinner at home. My mum <i class="pc">was cooking</i> in the kitchen <i class="cj">when</i> I <i class="ps">smelled</i> <i class="vc">smoke</i>.`,
+  `The <i class="vc">cooker</i> was on fire! Dad <i class="ps">called</i> the <i class="vc">emergency</i> number <i class="cj">while</i> Mum <i class="pc">was turning</i> off the <i class="vc">electricity</i>. The firefighters <i class="ps">came</i> and <i class="ps">stopped</i> the fire quickly.`,
+  `Nobody was hurt. The firefighters <i class="ps">said</i> it was a small <i class="vc">accident</i>. I was very afraid, but I <i class="ps">felt</i> happy because we were safe.`]},
+ {tab:"🚑 Road accident",h:"Road Accident Near School",by:"By a Grade 5 reporter",p:[
+  `Last Friday, my classmates and I <i class="pc">were walking</i> home from school. We <i class="pc">were talking</i> about our homework <i class="cj">when</i> we <i class="ps">heard</i> a <i class="vc">weird</i> noise.`,
+  `Two cars <i class="ps">had</i> an <i class="vc">accident</i> on the road. A man <i class="pc">was shouting</i> for help. A woman <i class="ps">called</i> an <i class="vc">ambulance</i> and it <i class="ps">came</i> in five minutes. <i class="cj">While</i> the doctors <i class="pc">were helping</i> the people, we <i class="ps">stood</i> far away.`,
+  `Everyone was safe in the end. People <i class="ps">said</i> the drivers were lucky. I <i class="ps">felt</i> shocked and sad, but I was happy that the ambulance helped quickly.`]}
+];
+const labs=["Introduction · who, where, what were you doing?","Body · what happened?","Conclusion · how did it end? what did people say? how did you feel?"];
+const countWords=t=>(t.trim().match(/\S+/g)||[]).length;
+let mi=0,hlOn=true;
+function showModel(i){
+  mi=i;$$(".btn",$("#mtabs")).forEach((b,k)=>b.classList.toggle("sec",k!==i));
+  const m=M[i],n=$("#news");
+  n.innerHTML=`<h3>${m.h}</h3><div class="by">${m.by}</div>`+m.p.map((t,k)=>`<div class="para p${k+1}"><span class="lab">¶${k+1} ${labs[k]}</span>${t}</div>`).join("");
+  n.classList.toggle("hl",hlOn);
+  const w=countWords(m.p.map(t=>t.replace(/<[^>]+>/g,"")).join(" "));
+  const wc=$("#mwc");wc.textContent=w+" words ✓ (50–90)";wc.classList.toggle("no",w<50||w>90);
+}
+M.forEach((m,i)=>{const b=el("button","btn sec",m.tab);b.onclick=()=>showModel(i);$("#mtabs").append(b)});
+$("#hlBtn").onclick=e=>{hlOn=!hlOn;$("#news").classList.toggle("hl",hlOn);e.target.textContent="🖍️ Highlights: "+(hlOn?"ON":"OFF")};
+$("#readBtn").onclick=()=>{const m=M[mi];speak(m.h+". "+m.p.map(t=>t.replace(/<[^>]+>/g,"")).join(" "))};
+showModel(0);
+
+/* draft + live checker */
+const ta=$("#draft");
+const VOC=/\b(life ?boat|life jacket|rescue boat|alarm|emergency|experiment|fire drill|fire engine|smoke|accident|ambulance|cause[sd]?|cooker|electricity|heating|million|power|rehears\w+|weird|explain\w*|whisper\w*)\b/i;
+const CH=[
+ ["50–90 words",t=>{const w=countWords(t);return w>=50&&w<=90}],
+ ["3 paragraphs",t=>t.split(/\n\s*\n/).filter(x=>x.trim()).length===3],
+ ["was / were + -ing",t=>/\b(was|were|wasn't|weren't)\s+\w+ing\b/i.test(t)],
+ ["when or while",t=>/\b(when|while)\b/i.test(t)],
+ ["unit vocabulary",t=>VOC.test(t)],
+ ["feelings (I felt…)",t=>/\bI (felt|was)\s+\w+/i.test(t)&&/\b(felt|scared|happy|afraid|proud|shocked|sad|nervous|worried|relieved)\b/i.test(t)]
+];
+const ck=$("#checks");
+CH.forEach(c=>ck.append(el("div","chk",`<span class="ic">✓</span>${c[0]}`)));
+function upd(){
+  const t=ta.value,w=countWords(t),d=$("#dwc");
+  d.textContent=w+" words";d.classList.toggle("no",w<50||w>90);
+  $$(".chk",ck).forEach((n,i)=>n.classList.toggle("on",CH[i][1](t)));
+}
+ta.addEventListener("input",upd);upd();
+$$(".starters").forEach(box=>$$(".st",box).forEach(b=>b.onclick=()=>{
+  const add=b.textContent;let v=ta.value;
+  if(v&&!/[\s]$/.test(v))v+=" ";
+  ta.value=v+add;ta.focus();ta.scrollIntoView({behavior:"smooth",block:"center"});upd();
+}));
+
+/* ---------- tabs & theme ---------- */
+$$(".tab").forEach(t=>t.onclick=()=>{
+  $$(".tab").forEach(x=>x.classList.toggle("on",x===t));
+  $$(".panel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.t));
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+$("#themeBtn").onclick=()=>{
+  const r=document.documentElement,dark=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0d1324";
+  r.dataset.theme=dark?"light":"dark";
+};
+stats();
+</script>
+</body>
+</html>
